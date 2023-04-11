@@ -5,6 +5,10 @@ from flask import jsonify
 # Create an app
 app = Flask(__name__)
 
+@app.route("/") 
+def home():
+    return "Data for visualizations"
+
 """
 selected_year and selected_crime will be selected on the visualization web page by the user and passed into the functions below
 """
