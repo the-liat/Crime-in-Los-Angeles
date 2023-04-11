@@ -68,6 +68,74 @@ def victim_data(selected_year, selected_crime):
     data = """ HERE WE NEED TO PUT THE QUERY -  percent of gender, ethnicity, age"""
     return jsonify(data)
 
+#Crime by age and year-BK
+@app.route("/Victim_age")
+def victim_data(selected_year, selected_crime):
+    query_age = text(f"""
+    SELECT count(crime), year, Victim_age 
+    FROM la_crime
+    WHERE year = 2018 
+    AND crime = 'Domestic Violence'
+    AND crime IS NOT NULL
+    AND Victim_age IS NOT NULL
+    GROUP BY Victim_age
+    """)
+    result = engine.execute(query_age)
+    rows = result.fetchall()
+    crime_dict = []
+    for row in rows:
+        print(row)
+        crime_dict.append({"Month": row[2], "Total Crimes": row[0]})
+        print(crime_dict)
+    return jsonify(crime_dict)
+
+#Crime type count by victim gender-bk
+@app.route("/victim_gender")
+def victim_data(selected_year, selected_crime):
+    query_gender = text(f"""
+    SELECT count(crime), crime, victim_gender 
+    FROM la_crime
+    WHERE year = 2018 
+    AND crime IS NOT NULL
+    AND victim_gender IS NOT NULL
+    GROUP BY crime, victim_gender
+    """)
+    result = engine.execute(query_gender)
+    rows = result.fetchall()
+    crime_dict = []
+    for row in rows:
+        print(row)
+        crime_dict.append({"Crime Type": row[1], "Victim Gender": row[2], "Total Crimes": row[0]})
+        print(crime_dict)
+    return jsonify(crime_dict)
+
+
+
+##query to show crime by year, geoloc, area, premis and crime typ-bk
+@app.route("/victim_gender")
+def victim_data(selected_year, selected_crime):
+    query_location = text(f"""
+    SELECT count(crime), lat, lon, area_name, crime, premise, year
+    FROM la_crime
+    WHERE year = year 
+    AND crime IS NOT NULL
+    AND lat IS NOT NULL
+    AND lon IS NOT NULL
+    AND area_name IS NOT NULL
+    AND premise IS NOT NULL
+    GROUP BY lat, lon, area_name, crime, premise
+    LIMIT 200
+    """)
+    result = engine.execute(query_location)
+    rows = result.fetchall()
+    crime_dict = []
+    for row in rows:
+        crime_dict.append({"Year": row[6], "Crime Type": row[4], "Premise": row[5], "Area Name": row[3], "Latitude": row[1], "Longitude": row[2], "Total Crimes": row[0]})
+        print(crime_dict)
+    return jsonify(crime_dict)
+
+
+
 # Query data by year and return data for map 
 @app.route("/map")
 def map_data(selected_year, selected_crime):
