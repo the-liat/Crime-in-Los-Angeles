@@ -4,8 +4,8 @@ Reading LA Crime data
 let url = "http://127.0.0.1:5000/";
 let crime_url = `${url}/crime`;
 let crime_by_year_url = `${url}/crime_year/${year}/${crime}`;
-let victim_data_url = `${url}/victim/${year}`
-let map_url = `${url}/map/${year}`;
+let victim_data_url = `${url}/victim/${year}/${crime}`
+let map_url = `${url}/map/${year}/${crime}`;
 
 /*------------------------------------------------------------
 Create Crime Chart
