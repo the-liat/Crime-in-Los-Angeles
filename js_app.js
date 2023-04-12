@@ -17,10 +17,29 @@ console.log("Crime Data Promise: ", crimePromise);
 
 // Fetch the JSON data and create crime chart
 d3.json(crime_url).then(function(data) {
-  console.log(data); // Verifying data
-  createDropdown(data); //initializing the drop down menu
-  crimeChart(); // this will initialize the page wth the first subject
+  console.log(data); 
+  // Verifying data
+//   createDropdown(data); //initializing the drop down menu
+  crimeChart(data); // this will initialize the page wth the first subject
 }); 
+function crimeChart(data){
+// Set up the trace for the bar chart
+let trace = {
+    x: data.year,
+    y: data.Total_Crimes,
+    text: labels,
+    type: "line",
+    // orientation: "h"
+};
+
+// Setup the layout
+let layout = {
+    title: "LA crime data 2018-2022"
+};
+
+// Call Plotly to plot the bar chart
+Plotly.newPlot("line", [trace], layout)
+}
 
 /*------------------------------------------------------------
 Create/Update Crime by year Chart
@@ -40,7 +59,7 @@ d3.json(crime_by_year_url).then(function(data) {
         Creating the Crime Type down menu - UPDATE FUNCTION
 -------------------------------------------------------*/
 function createDropdown(data) {
-    let selection = document.getElementById("selDataset");
+    let selection = document.getElementById("selyear");
     for (let i = 0; i < data.names.length; i++) {
         let option = document.createElement("option");
         option.value = data.names[i];
