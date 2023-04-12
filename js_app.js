@@ -17,8 +17,16 @@ let map_url = `${url}/map`;
     updatePage(selectedYear, selectedCrime);
 };
 
+
+/*-----------------------------------------------------------
+        Generating the Chart (all nested functions)   
+ -----------------------------------------------------------*/
 // Calling the function to get data and create static graph (one time no need to update)
 fetchAllCrimes();
+
+// Calling the function to update charts when selection is made 
+// [default passed to the flask server is (2022, 'Assualt'), so the page starts with that]
+updatePage(selectedYear, selectedCrime);
 
 /*------------------------------------------------------------------------------------
        Update page 
@@ -62,8 +70,44 @@ function createDropdown(data) {
         Line chart for total Crimes for 2018-2022
 ------------------------------------------------------------------------------------*/
 function crimeChart(data) {
-    // ADD CODE TO PARSE THE DATA
-    // ADD CODE FOR LINE CHART HERE
+    // Parsing the data
+    let totalCrime = [];
+    let crimeYear = [];
+    for (let i = 0; i < data.length; i++) {
+        totalCrime.push(data[i]["Total Crimes"]);
+        crimeYear.push(data[i]["Year"]);
+    };
+    console.log(totalCrime); // prints an array of Total Crime values
+    console.log(crimeYear); // prints an array of Year values
+    // Code for line chart
+    let plotData = [{
+        type: "line",
+        data: {
+          labels: crimeYear,
+          datasets: [
+            {
+                label: "Total Crime",
+                data: totalCrime,
+                backgroundColor: "rgba(211, 84, 0, 0.8)",
+                borderColor: "rgba(243, 156, 18, 1)",
+                borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Total Number of Crimes 2018-2022",
+                fontSize: 18
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {beginAtZero: true}
+                    }],
+            },
+        }
+      }];
+    Plotly.newPlot("xxxx", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
 };
 
 /*------------------------------------------------------------
@@ -84,9 +128,46 @@ function fetchCrimeByMonth(selectedYear, selectedCrime) {
         Line chart for crime by month
 ------------------------------------------------------------------------------------*/
 function crimeByMonthChart(data) {
-    // ADD CODE TO PARSE THE DATA
-    // ADD CODE FOR LINE CHART HERE
+    // Parsing the data
+    let numCrimes = [];
+    let crimeMonth = [];
+    for (let i = 0; i < data.length; i++) {
+        numCrimes.push(data[i]["Total Crimes"]);
+        crimeMonth.push(data[i]["Month"]);
+    };
+    console.log(numCrimes); // prints an array of Total Crime values
+    console.log(crimeMonth); // prints an array of Year values
+    // Code for line chart
+    let plotData = [{
+        type: "line",
+        data: {
+          labels: crimeMonth,
+          datasets: [
+            {
+                label: "Number of Crimes",
+                data: numCrimes,
+                backgroundColor: "rgba(211, 84, 0, 0.8)",
+                borderColor: "rgba(243, 156, 18, 1)",
+                borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Number of Crimes by Month",
+                fontSize: 18
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {beginAtZero: true}
+                    }],
+            },
+        }
+      }];
+    Plotly.newPlot("xxxx", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
 };
+
 
 /*------------------------------------------------------------
         Victim Data
@@ -118,7 +199,23 @@ function ageChart(data) {
     };
     console.log(ageCatg); // prints an array of Age categories
     console.log(agePercent); // prints an array of Age % values
-    // ADD CODE FOR BAR CHART HERE
+    // Code for horizontal bar chart
+        let plotData = [{
+            y: ageCatg,
+            x: agePercent,
+            type: 'bar',
+            orientation: 'h',
+            text: ageCatg,
+            name: 'Victim Age',
+            marker: {
+                color: 'rgba(211, 84, 0, 0.8)', 
+                line: {
+                    color: 'rgba(243, 156, 18, 1)', 
+                    width: 1
+                }
+            }
+        }];
+        Plotly.newPlot("xxxx", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
 };
 
 /*------------------------------------------------------------------------------------
@@ -126,8 +223,32 @@ function ageChart(data) {
 ------------------------------------------------------------------------------------*/
 // function to set bar chart elements
 function ethnicityChart(data) {
-    // ADD CODE TO PARSE THE DATA
-    // ADD CODE FOR BAR CHART HERE
+    // Parsing the data
+    let ethnCatg = [];
+    let ethnPercent = [];
+    for (let i = 0; i < data["Ethnicity Data"].length; i++) {
+        ethnCatg.push(data["Ethnicity Data"][i]["Ethnicity"]);
+        ethnPercent.push(data["Ethnicity Data"][i]["Ethnicity %"]);
+    };
+    console.log(ethnCatg); // prints an array of Ethnicity categories
+    console.log(ethnPercent); // prints an array of Ethnicity % values
+    // Code for horizontal bar chart
+    let plotData = [{
+        y: ethnCatg,
+        x: ethnPercent,
+        type: 'bar',
+        orientation: 'h',
+        text: ethnCatg,
+        name: 'Victim Ethnicity',
+        marker: {
+            color: 'rgba(211, 84, 0, 0.8)', 
+            line: {
+                color: 'rgba(243, 156, 18, 1)', 
+                width: 1
+            }
+        }
+    }];
+    Plotly.newPlot("xxx", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
 };
 
 /*------------------------------------------------------------------------------------
@@ -135,8 +256,31 @@ function ethnicityChart(data) {
 ------------------------------------------------------------------------------------*/
 // function to set pie chart elements
 function genderChart(data) {
-    // ADD CODE TO PARSE THE DATA
-    // ADD CODE FOR PIE CHART HERE
+    // Parsing the data
+    let genderCatg = [];
+    let genderPercent = [];
+    for (let i = 0; i < data["Gender Data"].length; i++) {
+        genderCatg.push(data["Gender Data"][i]["Gender"]);
+        genderPercent.push(data["Gender Data"][i]["Gender %"]);
+    };
+    console.log(genderCatg); // prints an array of Gender categories
+    console.log(genderPercent); // prints an array of Gender % values
+    // Code for pie chart
+    let plotData = [{
+        type: 'pie',
+        data: {
+            labels: genderCatg,
+            datasets: [{
+              data: genderPercent,
+              backgroundColor: [
+                'rgb(211, 84, 0)', // color for Male
+                'rgb(243, 156, 18)' // color for Female
+              ],
+              borderWidth: 1
+            }]
+        }
+    }];
+    Plotly.newPlot("xxx", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
 };
 
 /*------------------------------------------------------------
@@ -163,5 +307,3 @@ function crimeMap(data) {
 };
 
 
-// Calling the function to update charts when selection is made
-updatePage(selectedYear, selectedCrime);
