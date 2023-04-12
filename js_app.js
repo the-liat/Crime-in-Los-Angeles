@@ -1,44 +1,53 @@
 /*------------------------------------------------------------
-Reading LA Crime data 
+        Requesting LA Crime data from Flask Server
 -------------------------------------------------------------*/
 let url = "http://127.0.0.1:5000/";
 let crime_url = `${url}/crime`;
-let crime_by_year_url = `${url}/crime_year/${year}/${crime}`;
-let victim_data_url = `${url}/victim/${year}/${crime}`
-let map_url = `${url}/map/${year}/${crime}`;
+let crime_by_year_url = `${url}/crime_year`;
+let victim_data_url = `${url}/victim`
+let map_url = `${url}/map`;
+
+/*-----------------------------------------------------------
+    getting selected choices from drop down menus when clicked   
+ -----------------------------------------------------------*/
+ function optionChanged() {
+    let selectedYear = d3.select("#xxxxxxx").property("value"); //NEED TO CHANGE THE div TO THE CORRECT ONE ON THE PAGE
+    // THIS MIGHT NEED TO CHANGE FOR 5 LINES WITH CONDITIONALS BECAUSE WE HAVE 5 BOXES ON THE PAGE. VALUE OF YEAR NEED TO BE INTEGER
+    let selectedCrime = d3.select("#yyyyyyyy").property("value"); //NEED TO CHANGE THE div TO THE CORRECT ONE ON THE PAGE
+    updatePage(selectedYear, selectedCrime);
+};
+
+// Calling the function to get data and create static graph (one time no need to update)
+fetchAllCrimes();
+
+/*------------------------------------------------------------------------------------
+       Update page 
+------------------------------------------------------------------------------------*/
+function updatePage(selectedYear, selectedCrime) {
+    fetchCrimeByMonth(selectedYear, selectedCrime);
+    fetchVictimData(selectedYear, selectedCrime);
+    fetchMapData(selectedYear, selectedCrime);
+};
 
 /*------------------------------------------------------------
-Create Crime Chart
+          Data for total Crimes for 2018-2022
 -------------------------------------------------------------*/
-
-// Create promises (that will be based on the user selection)
-const crimePromise = d3.json(crime_url);
-console.log("Crime Data Promise: ", crimePromise);
-
-// Fetch the JSON data and create crime chart
-d3.json(crime_url).then(function(data) {
-  console.log(data); // Verifying data
-  createDropdown(data); //initializing the drop down menu
-  crimeChart(); // this will initialize the page wth the first subject
-}); 
+function fetchAllCrimes() {
+    // Create promise
+    const crimePromise = d3.json(crime_url);
+    console.log("Crime Data Promise: ", crimePromise);
+    
+    // Fetch the JSON data and create crime chart
+    d3.json(crime_url).then(function(data) {
+        console.log(data); // Verifying data
+        createDropdown(data); //initializing the drop down menu *** DO WE NEED THIS OR DID ASTER CREATE IT ON THE PAGE?
+        crimeChart(data);
+    });
+};
 
 /*------------------------------------------------------------
-Create/Update Crime by year Chart
--------------------------------------------------------------*/
-
-// Create promises (that will be based on the user selection)
-const crmYrPromise = d3.json(crime_by_year_url);
-console.log("Crime by Year Data Promise: ", crmYrPromise);
-
-// Fetch the JSON data and create/ update page - from here all functions will be called (functions are nested)
-d3.json(crime_by_year_url).then(function(data) {
-  console.log(data); // Verifying data
-  crimeByYearChart(2022, "Domestic Violence"); // this will initialize the page with last year we have data one and a crime type
-});
-
-/*-------------------------------------------------------
-        Creating the Crime Type down menu - UPDATE FUNCTION
--------------------------------------------------------*/
+        Creating the Crime Type down menu - UPDATE FUNCTION IF IT IS NEEDED AT ALL
+-----------------------------------------------------------*/
 function createDropdown(data) {
     let selection = document.getElementById("selDataset");
     for (let i = 0; i < data.names.length; i++) {
@@ -46,139 +55,99 @@ function createDropdown(data) {
         option.value = data.names[i];
         option.text = data.names[i];
         selection.appendChild(option);
-    }
-}
-
-/*-----------------------------------------------------------
-    getting selected choices from drop down menus when clicked
- -----------------------------------------------------------*/
-function optionChanged() {
-    let selectedValue = d3.select("#selDataset").property("value");
-    selectedValue = selectedValue.toString()
-    updatePage(selectedValue);
-}
-
+    };
+};
 
 /*------------------------------------------------------------------------------------
-    horizontal bar chart with a dropdown menu to display the top 10 OTUs found.
+        Line chart for total Crimes for 2018-2022
+------------------------------------------------------------------------------------*/
+function crimeChart(data) {
+    // ADD CODE FOR LINE CHART HERE
+};
+
+/*------------------------------------------------------------
+        Data for Crime by month Chart
+-------------------------------------------------------------*/
+function fetchCrimeByMonth(selectedYear, selectedCrime) {
+    // Create promise 
+    const crmYrPromise = d3.json(crime_by_year_url); 
+    console.log("Crime by Month Data Promise: ", crmYrPromise);
+    // Fetch the JSON data and create/ update chart 
+    d3.json(crime_by_year_url).then(function(data) {
+        console.log(data); // Verifying data
+        crimeByMonthChart(data);
+    });
+};
+
+/*------------------------------------------------------------------------------------
+        Line chart for crime by month
+------------------------------------------------------------------------------------*/
+function crimeByMonthChart(data) {
+    // ADD CODE FOR LINE CHART HERE
+};
+
+/*------------------------------------------------------------
+        Victim Data
+-------------------------------------------------------------*/
+function fetchVictimData(selectedYear, selectedCrime); {
+    // Create promise 
+    const victimPromise = d3.json(victim_data_url); 
+    console.log("Victim Data Promise: ", victimPromise);
+    // Fetch the JSON data and create/ update chart 
+    d3.json(victim_data_url).then(function(data) {
+        console.log(data); // Verifying data
+        genderChart(data);
+        ageChart(data); 
+        ethnicityChart(data);
+    });
+};
+
+/*------------------------------------------------------------------------------------
+        Bar chart for Age.
 ------------------------------------------------------------------------------------*/
 // function to set bar chart elements
-function barChart(barData) { // the barData array contains the samples values, otu ids, otu labels
-    let plotData = [{
-        y: barData[1],
-        x: barData[0],
-        type: 'bar',
-        orientation: 'h',
-        text: barData[2],
-        name: barData[2],
-        marker: {
-            color: 'rgba(211, 84, 0, 0.8)', 
-            line: {
-                color: 'rgba(243, 156, 18, 1)', 
-                width: 1
-            }
-        }
-    }];
-    Plotly.newPlot("bar", plotData);
+function ageChart(data) {
+    // ADD CODE FOR BAR CHART HERE
 };
 
 /*------------------------------------------------------------------------------------
-    bubble chart
+        Bar chart for Ethnicity.
 ------------------------------------------------------------------------------------*/
-// function to set bubble chart elements
-function bubbleChart(subjectData) {
-    // Setting data arrays
-    let xValues = subjectData.otu_ids; // use x Values also for marker colors
-    let yValues = subjectData.sample_values; // use y values also for marker size
-    let textValues = subjectData.otu_labels;
-    // Defining chart data
-    var plotData = [{
-        x: xValues,
-        y: yValues,
-        text: textValues,
-        mode: 'markers',
-        marker: {
-          color: xValues,
-          size: yValues
-        }
-      }];
-    let layout = {
-        xaxis: {
-            title: 'OTU ID'
-          },
-        showlegend: false,
-        height: 600,
-        width: 1200
-      };
-    Plotly.newPlot("bubble", plotData, layout);
-}
+// function to set bar chart elements
+function ethnicityChart(data) {
+    // ADD CODE FOR BAR CHART HERE
+};
 
 /*------------------------------------------------------------------------------------
-    metadata display
+        Pie chart for Gender.
 ------------------------------------------------------------------------------------*/
-function metaData(subjectData) {
-    // Removing all list items from the html element with the ID "sample-metadata"
-    d3.select("#sample-metadata").selectAll("li").remove();
-    // Creating an array of the list items 
-    let displayItems = Object.entries(subjectData).map(([key, value]) => `${key}: ${value}`);
-    // Add items to the <ul> element
-    for (let i=0; i < displayItems.length; i++) {
-        let ul = d3.select("#sample-metadata").select("ul")
-        ul.append("li").text(displayItems[i]);
-    };
-}
+// function to set pie chart elements
+function genderChart(data) {
+    // ADD CODE FOR PIE CHART HERE
+};
+
+/*------------------------------------------------------------
+        Map Data
+-------------------------------------------------------------*/
+function fetchMapData(selectedYear, selectedCrime); {
+    // Create promise 
+    const mapPromise = d3.json(map_url); 
+    console.log("Map Data Promise: ", mapPromise);
+    // Fetch the JSON data and create/ update chart 
+    d3.json(map_url).then(function(data) {
+        console.log(data); // Verifying data
+        crimeMap(data);
+    });
+};
 
 /*------------------------------------------------------------------------------------
-    gauge chart
+        Map chart 
 ------------------------------------------------------------------------------------*/
-// function to set bubble chart elements
-function gaugeChart(subjectData) {
-    let wfreq = subjectData.wfreq; // getting washing frequency value
-    // Defining chart data
-    var plotData = [{
-        domain: { x: [0, 1], y: [0, 1] },
-        value: wfreq,
-        title: { text: "Belly Button Washing Frequency: Scrubs Per Week" },
-        type: "indicator",
-        mode: "gauge+number",
-        delta: { reference: 400 },
-        gauge: { 
-            axis: { range: [0, 9] }, 
-            bar: { color: 'rgba(139, 64, 0, 1)' },
-            steps: [
-                {range: [0, 1], color: 'rgba(255, 222, 173, 1)' },  
-                { range: [1, 2], color: 'rgba(255, 229, 180, 1)' },
-                { range: [2, 3], color: 'rgba(250, 200, 152, 1)' },
-                { range: [3, 4], color: 'rgba(255, 165, 0, 1)' },
-                { range: [4, 5], color: 'rgba(255, 117, 24, 1)' },
-                { range: [5, 6], color: 'rgba(255, 95, 21, 1)' },
-                { range: [6, 7], color: 'rgba(236, 88, 0, 1)' },
-                { range: [7, 8], color: 'rgba(227, 83, 53, 1)' },
-                { range: [8, 9], color: 'rgba(204, 119, 34, 1)' }
-          ]}
-      }];
-    let layout = {
-        width: 600, 
-        height: 500, 
-        margin: { t: 0, b: 0 }
-      };
-    Plotly.newPlot("gauge", plotData, layout);
-}
-
-/*------------------------------------------------------------------------------------
-       Update page 
-------------------------------------------------------------------------------------*/
-function updatePage(selectedValue) {
-    let subjectData  = organizedData[selectedValue];
-    // bar chart
-    barChart(selectTopTen(subjectData.samplesData));
-    // bubble chart
-    bubbleChart(subjectData.samplesData);
-    // metadata 
-    metaData(subjectData.metadata);
-    //Gauge chart
-    gaugeChart(subjectData.metadata);
+// function to setup map
+function crimeMap(data) {
+    // ADD CODE FOR PIE CHART HERE
 };
 
 
-
+// Calling the function to update charts when selection is made
+updatePage(selectedYear, selectedCrime);
