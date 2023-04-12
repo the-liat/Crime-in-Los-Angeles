@@ -62,6 +62,7 @@ function createDropdown(data) {
         Line chart for total Crimes for 2018-2022
 ------------------------------------------------------------------------------------*/
 function crimeChart(data) {
+    // ADD CODE TO PARSE THE DATA
     // ADD CODE FOR LINE CHART HERE
 };
 
@@ -83,6 +84,7 @@ function fetchCrimeByMonth(selectedYear, selectedCrime) {
         Line chart for crime by month
 ------------------------------------------------------------------------------------*/
 function crimeByMonthChart(data) {
+    // ADD CODE TO PARSE THE DATA
     // ADD CODE FOR LINE CHART HERE
 };
 
@@ -107,6 +109,15 @@ function fetchVictimData(selectedYear, selectedCrime); {
 ------------------------------------------------------------------------------------*/
 // function to set bar chart elements
 function ageChart(data) {
+    // Parsing the data
+    let ageCatg = [];
+    let agePercent = [];
+    for (let i = 0; i < data["Age Data"].length; i++) {
+        ageCatg.push(data["Age Data"][i]["Age"]);
+        agePercent.push(data["Age Data"][i]["Age %"]);
+    };
+    console.log(ageCatg); // prints an array of Age categories
+    console.log(agePercent); // prints an array of Age % values
     // ADD CODE FOR BAR CHART HERE
 };
 
@@ -115,6 +126,7 @@ function ageChart(data) {
 ------------------------------------------------------------------------------------*/
 // function to set bar chart elements
 function ethnicityChart(data) {
+    // ADD CODE TO PARSE THE DATA
     // ADD CODE FOR BAR CHART HERE
 };
 
@@ -123,6 +135,7 @@ function ethnicityChart(data) {
 ------------------------------------------------------------------------------------*/
 // function to set pie chart elements
 function genderChart(data) {
+    // ADD CODE TO PARSE THE DATA
     // ADD CODE FOR PIE CHART HERE
 };
 
@@ -145,7 +158,8 @@ function fetchMapData(selectedYear, selectedCrime); {
 ------------------------------------------------------------------------------------*/
 // function to setup map
 function crimeMap(data) {
-    // ADD CODE FOR PIE CHART HERE
+    // ADD CODE TO PARSE THE DATA
+    // ADD CODE FOR MAP HERE
 };
 
 
