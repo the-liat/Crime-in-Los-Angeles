@@ -1,7 +1,5 @@
 # dependencies
-from sqlalchemy import create_engine, inspect, MetaData, select, text, Table, func
-from sqlalchemy import Column, Integer, String, Float
-from sqlalchemy.orm import Session
+from sqlalchemy import create_engine, MetaData, text
 from sqlalchemy.ext.automap import automap_base
 from flask import Flask
 from flask import jsonify
@@ -40,39 +38,101 @@ def crime():
     rows = result.fetchall()
     crime_dict = []
     for row in rows:
-        print(row)
         crime_dict.append({"Year": row[1], "Total Crimes": row[0]})
-        print(crime_dict)
     return jsonify(crime_dict)
 
-@app.route("/crime_year") # Data for line graph
-def crime_by_year(selected_year, selected_crime):
+@app.route("/crime_year") # Data for line graph by month
+def crime_by_year(selected_year=2022, selected_crime='Assault'):
     query = text(f"""
-    SELECT count('crime'), year, month_name 
+    SELECT count('crime'), year, month, month_name 
     FROM la_crime
     WHERE year = {selected_year} 
-    AND crime = {selected_crime}
-    GROUP BY month_name
+    AND crime = "{selected_crime}"
+    GROUP BY month_name, month
+    ORDER BY month  
     """)
     result = engine.execute(query)
     rows = result.fetchall()
     crime_dict = []
     for row in rows:
-        print(row)
-        crime_dict.append({"Month": row[2], "Total Crimes": row[0]})
-        print(crime_dict)
+        crime_dict.append({"Month": row[3], "Total Crimes": row[0]})
     return jsonify(crime_dict)
 
+
 @app.route("/victim")
-def victim_data(selected_year, selected_crime):
-    data = """ HERE WE NEED TO PUT THE QUERY -  percent of gender, ethnicity, age"""
-    return jsonify(data)
+def victim_data(selected_year=2022, selected_crime='Assault'):
+    query_age = text(f"""
+    SELECT crime, year, Victim_age, count(*) AS total_count 
+    FROM la_crime
+    WHERE year = {selected_year} 
+    AND crime = "{selected_crime}"
+    GROUP BY Victim_age
+    """)
+    print(query_age)
+    result = engine.execute(query_age)
+    rows = result.fetchall()
+    age_dict = []
+    total_count = 0
+    for row in rows:
+        print(row)
+        age_dict.append({"Age": row[2], "Age Count": row[3]})
+        total_count += row[3]
+    for d in age_dict:
+        d["Total People"] = total_count
+        d["Age %"] = round((d["Age Count"]/d["Total People"]) * 100)
+    query_gender = text(f"""
+    SELECT crime, year, Victim_gender, count(*) AS total_count
+    FROM la_crime
+    WHERE year = {selected_year} 
+    AND crime = "{selected_crime}"
+    GROUP BY Victim_gender
+    """)
+    result = engine.execute(query_gender)
+    rows = result.fetchall()
+    gender_dict = []
+    total_count = 0
+    for row in rows:
+        gender_dict.append({"Gender": row[2], "Gender Count": row[3]})
+        total_count += row[3]
+    for d in gender_dict:
+        d["Total People"] = total_count
+        d["Gender %"] = round((d["Gender Count"]/d["Total People"]) * 100)
+    query_ethnicity = text(f"""
+    SELECT crime, year, Victim_ethnicity, count(*) AS total_count
+    FROM la_crime
+    WHERE year = {selected_year} 
+    AND crime = "{selected_crime}"
+    GROUP BY Victim_ethnicity
+    """)
+    result = engine.execute(query_ethnicity)
+    rows = result.fetchall()
+    ethnicity_dict = []
+    total_count = 0
+    for row in rows:
+        ethnicity_dict.append({"Ethnicity": row[2], "Ethnicity Count": row[3]})
+        total_count += row[3]
+    for d in ethnicity_dict:
+        d["Total People"] = total_count
+        d["Ethnicity %"] = round((d["Ethnicity Count"]/d["Total People"]) * 100)
+    crime_dict = {"Age Data": age_dict, "Gender Data": gender_dict, "Ethnicity Data": ethnicity_dict}
+    return jsonify(crime_dict)
 
 # Query data by year and return data for map 
 @app.route("/map")
-def map_data(selected_year, selected_crime):
-    data = """ HERE WE NEED TO PUT THE QUERY"""
-    return jsonify(data)
+def map_data(selected_year=2022, selected_crime='Assault'):
+    query_map = text(f"""
+    SELECT crime, year, lat, lon, area_name, premise, count(*) AS total_count
+    FROM la_crime
+    WHERE year = {selected_year} 
+    AND crime = "{selected_crime}"
+    GROUP BY lat, lon, area_name, premise
+    """)
+    result = engine.execute(query_map)
+    rows = result.fetchall()
+    map_dict = []
+    for row in rows:
+        map_dict.append({"lat": row[2], "lon": row[3], "Area": row[4],"Premise": row[5], "Number of Crimes": row[6]})
+    return jsonify(map_dict)
 
 if __name__ == "__main__":
     app.run(debug=True)
