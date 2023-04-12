@@ -1,0 +1,57 @@
+<!DOCTYPE html> <!--HTML5 DOCTYPE-->
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>LA Crime App</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<div id="header">
+    <h1>Crimes in the Los Angeles Metropolitan Area</h1>
+</div>
+<div>
+    <div>
+        <span class="select">
+            <select id="selCrimeType">
+                <option>Lorem ipsum</option>
+                <option>Dolor sit amet</option>
+                <option>Consectetur adipiscing elit</option>
+                <option>Sed do eiusmod</option>
+                <option>Tempor incididunt ut labore</option>
+                <option>Et dolore magna aliqua</option>
+                <option>Proin sed libero enim sed</option>
+                <option>Mi quis hendrerit dolor magna</option>
+                <option>Rhoncus est pellentesque</option>
+                <option>Elit ullamcorper</option>
+                <option>Tellus molestie nunc non blandit</option>
+                <option>Duis at consectetur lorem donec</option>
+            </select>
+        </span>
+        <span class="select">
+            <div class="year" onClick="alert('2018');">2018</div>
+            <div class="year" onClick="alert('2019');">2019</div>
+            <div class="year" onClick="alert('2020');">2020</div>
+            <div class="year" onClick="alert('2021');">2021</div>
+            <div class="year" onClick="alert('2022');">2022</div>
+        </span>
+    </div>
+    <div id="display">
+        <span id="charts">
+            <div id="lineGraphs">
+                <span><div id="staticLine"></div></span>
+                <span id="dynamicLine"></span>
+            </div>
+            <div id="victimGraphs">
+                <span id="pie"></span>
+                <span id="barAge"></span>
+                <span id="barEth"></span>
+            </div>
+        </span>
+        <span id="map">
+            <!-- MAP -->
+        </span>
+    </div>
+</div>
+</body>
+<script src="static/code.js"></script>
+</html>

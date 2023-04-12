@@ -1,0 +1,85 @@
+#header {
+    text-align: center;
+    font-size: 36px;
+}
+
+#selCrimeType {
+    font-size: 36px;
+    text-align: center;
+}
+
+#display {
+    margin-top: 6px;
+    width: 100%;
+    /* background-color: #6FF; */
+}
+
+#display span {
+    display: inline-block;
+}
+
+#lineGraphs {
+    width: 1728px;
+    height: 500px;
+    /* background-color: #41AB5D; */
+}
+#victimGraphs {
+    width: 1728px;
+    height: 500px;
+    /* background-color: #F16913; */
+}
+
+#staticLine {
+    width: 573px;
+    height: 500px;
+    background-color: #0CD;
+}
+#dynamicLine {
+    width: 1150px;
+    height: 500px;
+    background-color: #8CD;
+}
+#pie {
+    width: 573px;
+    height: 500px;
+    background-color: #F67;
+}
+#barAge {
+    width: 573px;
+    height: 500px;
+    background-color: #F67;
+}
+#barEth {
+    width: 573px;
+    height: 500px;
+    background-color: #F67;
+}
+#map {
+    width: 794px;
+    height: 1000px;
+    background-color: #84F;
+}
+
+.select {
+    margin-left: 144px;
+}
+
+div.year {
+    height: 72px;
+    width: 200px;
+    font-size: 60px;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    display: inline-block;
+    background-color: #FF3;
+    cursor: pointer;
+}
+
+select {
+    padding: 18px;
+    background-color: #E5F5E0;
+    border-color: #00441B;
+    border-radius: 12px;
+    border-width: 4px;
+}
