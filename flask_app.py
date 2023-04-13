@@ -66,7 +66,7 @@ def crime_by_year(selected_year, selected_crime):
 # victims by % race
 @app.route("/race")
 def victim_ethnicity(selected_year, selected_crime):
-    query = text("""
+    query = text(f"""
     SELECT victim_ethnicity, count(*) AS total_count
         FROM la_crime
         WHERE year = {selected_year} 
