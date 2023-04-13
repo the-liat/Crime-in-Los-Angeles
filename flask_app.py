@@ -73,7 +73,6 @@ def crime_by_year(selected_year=2022, selected_crime='Assault'):
         crime_dict.append({"Month": row[3], "Total Crimes": row[0]})
     return jsonify(crime_dict)
 
-<<<<<<< HEAD
 # victims by % race
 @app.route("/race")
 def victim_ethnicity(selected_year, selected_crime):
@@ -152,66 +151,6 @@ def crime():
     return jsonify(gender_dict)
 
 
-=======
-
-@app.route("/victim/<selected_year>/<selected_crime>")
-def victim_data(selected_year=2022, selected_crime='Assault'):
-    query_age = text(f"""
-    SELECT crime, year, Victim_age, count(*) AS total_count 
-    FROM la_crime
-    WHERE year = {selected_year} 
-    AND crime = "{selected_crime}"
-    GROUP BY Victim_age
-    """)
-    print(query_age)
-    result = engine.execute(query_age)
-    rows = result.fetchall()
-    age_dict = []
-    total_count = 0
-    for row in rows:
-        print(row)
-        age_dict.append({"Age": row[2], "Age Count": row[3]})
-        total_count += row[3]
-    for d in age_dict:
-        d["Total People"] = total_count
-        d["Age %"] = round((d["Age Count"]/d["Total People"]) * 100)
-    query_gender = text(f"""
-    SELECT crime, year, Victim_gender, count(*) AS total_count
-    FROM la_crime
-    WHERE year = {selected_year} 
-    AND crime = "{selected_crime}"
-    GROUP BY Victim_gender
-    """)
-    result = engine.execute(query_gender)
-    rows = result.fetchall()
-    gender_dict = []
-    total_count = 0
-    for row in rows:
-        gender_dict.append({"Gender": row[2], "Gender Count": row[3]})
-        total_count += row[3]
-    for d in gender_dict:
-        d["Total People"] = total_count
-        d["Gender %"] = round((d["Gender Count"]/d["Total People"]) * 100)
-    query_ethnicity = text(f"""
-    SELECT crime, year, Victim_ethnicity, count(*) AS total_count
-    FROM la_crime
-    WHERE year = {selected_year} 
-    AND crime = "{selected_crime}"
-    GROUP BY Victim_ethnicity
-    """)
-    result = engine.execute(query_ethnicity)
-    rows = result.fetchall()
-    ethnicity_dict = []
-    total_count = 0
-    for row in rows:
-        ethnicity_dict.append({"Ethnicity": row[2], "Ethnicity Count": row[3]})
-        total_count += row[3]
-    for d in ethnicity_dict:
-        d["Total People"] = total_count
-        d["Ethnicity %"] = round((d["Ethnicity Count"]/d["Total People"]) * 100)
-    crime_dict = {"Age Data": age_dict, "Gender Data": gender_dict, "Ethnicity Data": ethnicity_dict}
-    return jsonify(crime_dict)
->>>>>>> 2e0fcd8b61f497d029ca1316e4eb3fcb075ea710
 
 # Query data by year and return data for map 
 @app.route("/map/<selected_year>/<selected_crime>")
