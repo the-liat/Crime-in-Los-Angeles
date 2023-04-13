@@ -171,7 +171,6 @@ function crimeChart(data) {
         type: "scatter",
         x: crimeYear,
         y: totalCrime,
-        title: 'Number of All Crimes by Year',
         mode: 'lines+markers',
         marker: {
           color: '#FFA500',
@@ -185,7 +184,7 @@ function crimeChart(data) {
     /*let layout = {
         plot_bgcolor: '#FFE5B4' 
       }*/
-    Plotly.newPlot("staticLine", plotData, {responsive: true}); 
+    Plotly.newPlot("staticLine", plotData, {responsive: true, title: 'Number of All Crimes by Year'}); 
 };
 
 /*------------------------------------------------------------
@@ -220,7 +219,6 @@ function crimeByMonthChart(data) {
         type: "scatter",
         x: crimeMonth,
         y: numCrimes,
-        title: 'Number of Crimes by Month',
         mode: 'lines+markers',
         marker: {
           color: '#FFA500',
@@ -231,7 +229,7 @@ function crimeByMonthChart(data) {
           width: 1
         }
       }];
-    Plotly.newPlot("dynamicLine", plotData, {responsive: true});
+    Plotly.newPlot("dynamicLine", plotData, {responsive: true, title: 'Number of Crimes by Month'});
 };
 
 
@@ -273,7 +271,6 @@ function ageChart(data) {
             orientation: 'h',
             text: ageCatg,
             name: 'Victim Age',
-            title: 'Victim Age',
             marker: {
                 color: '#D35400', 
                 line: {
@@ -282,7 +279,7 @@ function ageChart(data) {
                 }
             }
         }];
-        Plotly.newPlot("barAge", plotData, {responsive: true}); 
+        Plotly.newPlot("barAge", plotData, {responsive: true, title: 'Victim Age'}); 
 };
 
 /*------------------------------------------------------------------------------------
@@ -307,7 +304,6 @@ function ethnicityChart(data) {
         orientation: 'h',
         text: ethnCatg,
         name: 'Victim Ethnicity',
-        title: 'Victim Ethnicity',
         marker: {
             color: '#D35400', 
             line: {
@@ -316,7 +312,7 @@ function ethnicityChart(data) {
             }
         }
     }];
-    Plotly.newPlot("barEth", plotData, {responsive: true});
+    Plotly.newPlot("barEth", plotData, {responsive: true, title: 'Victim Ethnicity'});
 };
 
 /*------------------------------------------------------------------------------------
@@ -339,12 +335,11 @@ function genderChart(data) {
         values: genderPercent,
         labels: genderCatg,
         name: "Victim Gender",
-        title: 'Victim Gender',
         marker: {
             colors: ['#D35400', '#F39C12']
         }
     }];
-    Plotly.newPlot("pie", plotData, {responsive: true});
+    Plotly.newPlot("pie", plotData, {responsive: true, title: 'Victim Gender'});
 };
 
 /*------------------------------------------------------------
