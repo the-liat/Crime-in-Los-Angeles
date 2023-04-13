@@ -24,6 +24,7 @@ Base.classes.keys()
 app = Flask(__name__)
 
 @app.route("/") 
+@cross_origin()
 def home():
     query = text("""
     SELECT crime 
@@ -43,6 +44,7 @@ selected_year and selected_crime will be selected on the visualization web page 
 
 # Query crime data by year and crime and return data for line chart 
 @app.route("/crime") # Data for overall line chart by year - number of total crimes
+@cross_origin()
 def crime():
     query = text("""
     SELECT count('crime'), year 
@@ -57,6 +59,7 @@ def crime():
     return jsonify(crime_dict)
 
 @app.route("/crime_year/<selected_year>/<selected_crime>") # Data for line graph by month
+@cross_origin()
 def crime_by_year(selected_year=2022, selected_crime='Assault'):
     query = text(f"""
     SELECT count('crime'), year, month, month_name 
@@ -75,6 +78,7 @@ def crime_by_year(selected_year=2022, selected_crime='Assault'):
 
 
 @app.route("/victim/<selected_year>/<selected_crime>")
+@cross_origin()
 def victim_data(selected_year=2022, selected_crime='Assault'):
     query_age = text(f"""
     SELECT crime, year, Victim_age, count(*) AS total_count 
@@ -134,6 +138,7 @@ def victim_data(selected_year=2022, selected_crime='Assault'):
 
 # Query data by year and return data for map 
 @app.route("/map/<selected_year>/<selected_crime>")
+@cross_origin()
 def map_data(selected_year=2022, selected_crime='Assault'):
     query_map = text(f"""
     SELECT crime, year, lat, lon, area_name, premise, count(*) AS total_count
