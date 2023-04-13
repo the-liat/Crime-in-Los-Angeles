@@ -1,3 +1,8 @@
+from flask import Flask
+from flask_cors import CORS, cross_origin
+app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 # dependencies
 from sqlalchemy import create_engine, MetaData, text
 from sqlalchemy.ext.automap import automap_base
@@ -51,7 +56,7 @@ def crime():
         crime_dict.append({"Year": row[1], "Total Crimes": row[0]})
     return jsonify(crime_dict)
 
-@app.route("/crime_year") # Data for line graph by month
+@app.route("/crime_year/<selected_year>/<selected_crime>") # Data for line graph by month
 def crime_by_year(selected_year=2022, selected_crime='Assault'):
     query = text(f"""
     SELECT count('crime'), year, month, month_name 
@@ -69,7 +74,7 @@ def crime_by_year(selected_year=2022, selected_crime='Assault'):
     return jsonify(crime_dict)
 
 
-@app.route("/victim")
+@app.route("/victim/<selected_year>/<selected_crime>")
 def victim_data(selected_year=2022, selected_crime='Assault'):
     query_age = text(f"""
     SELECT crime, year, Victim_age, count(*) AS total_count 
@@ -128,7 +133,7 @@ def victim_data(selected_year=2022, selected_crime='Assault'):
     return jsonify(crime_dict)
 
 # Query data by year and return data for map 
-@app.route("/map")
+@app.route("/map/<selected_year>/<selected_crime>")
 def map_data(selected_year=2022, selected_crime='Assault'):
     query_map = text(f"""
     SELECT crime, year, lat, lon, area_name, premise, count(*) AS total_count

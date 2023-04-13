@@ -4,54 +4,61 @@
     <meta charset="UTF-8">
     <title>LA Crime App</title>
     <link rel="stylesheet" href="static/style.css">
+    <!-- Leaflet JavaScript code -->
+    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
+    <!-- D3 library -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
 </head>
-<body>
-<div id="header">
-    <h1>Crimes in the Los Angeles Metropolitan Area</h1>
-</div>
-<div>
+<body onload="init()">
+    <div id="header">
+        <h1>Crimes in the Los Angeles Metropolitan Area</h1>
+    </div>
     <div>
-        <span class="select">
-            <select id="selCrimeType">
-                <option>Lorem ipsum</option>
-                <option>Dolor sit amet</option>
-                <option>Consectetur adipiscing elit</option>
-                <option>Sed do eiusmod</option>
-                <option>Tempor incididunt ut labore</option>
-                <option>Et dolore magna aliqua</option>
-                <option>Proin sed libero enim sed</option>
-                <option>Mi quis hendrerit dolor magna</option>
-                <option>Rhoncus est pellentesque</option>
-                <option>Elit ullamcorper</option>
-                <option>Tellus molestie nunc non blandit</option>
-                <option>Duis at consectetur lorem donec</option>
-            </select>
-        </span>
-        <span class="select">
-            <div class="year" onClick="alert('2018');">2018</div>
-            <div class="year" onClick="alert('2019');">2019</div>
-            <div class="year" onClick="alert('2020');">2020</div>
-            <div class="year" onClick="alert('2021');">2021</div>
-            <div class="year" onClick="alert('2022');">2022</div>
-        </span>
+        <div>
+            <span class="select">
+                <select id="selCrimeType">
+                    <option>Lorem ipsum</option>
+                    <option>Dolor sit amet</option>
+                    <option>Consectetur adipiscing elit</option>
+                    <option>Sed do eiusmod</option>
+                    <option>Tempor incididunt ut labore</option>
+                    <option>Et dolore magna aliqua</option>
+                    <option>Proin sed libero enim sed</option>
+                    <option>Mi quis hendrerit dolor magna</option>
+                    <option>Rhoncus est pellentesque</option>
+                    <option>Elit ullamcorper</option>
+                    <option>Tellus molestie nunc non blandit</option>
+                    <option>Duis at consectetur lorem donec</option>
+                </select>
+            </span>
+            <span class="select">
+                <div class="year"><option value="2018" onClick="changeYear(this.value);">2018</option></div>
+                <div class="year"><option value="2019" onClick="changeYear(this.value);">2019</option></div>
+                <div class="year"><option value="2020" onClick="changeYear(this.value);">2020</option></div>
+                <div class="year"><option value="2021" onClick="changeYear(this.value);">2021</option></div>
+                <div class="year"><option value="2022" onClick="changeYear(this.value);">2022</option></div>
+            </span>
+        </div>
+        <div id="display">
+            <span id="charts">
+                <div id="lineGraphs">
+                    <span id="staticLine"></span>
+                    <span id="dynamicLine"></span>
+                </div>
+                <div id="victimGraphs">
+                    <span id="pie"></span>
+                    <span id="barAge"></span>
+                    <span id="barEth"></span>
+                </div>
+            </span>
+            <span id="map">
+                <!-- MAP -->
+            </span>
+        </div>
     </div>
-    <div id="display">
-        <span id="charts">
-            <div id="lineGraphs">
-                <span><div id="staticLine"></div></span>
-                <span id="dynamicLine"></span>
-            </div>
-            <div id="victimGraphs">
-                <span id="pie"></span>
-                <span id="barAge"></span>
-                <span id="barEth"></span>
-            </div>
-        </span>
-        <span id="map">
-            <!-- MAP -->
-        </span>
-    </div>
-</div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="static/code.js"></script>
 </body>
-<script src="static/code.js"></script>
 </html>
