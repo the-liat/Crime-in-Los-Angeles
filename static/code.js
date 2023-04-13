@@ -10,9 +10,69 @@ let victim_data_url = `${url}/victim/${selectedYear}/${selectedCrime}`;
 let map_url = `${url}/map/${selectedYear}/${selectedCrime}`;
 
 function init() {
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    sizePageElements(w,h);
     createDropdown();
     fetchAllCrimes();
     updatePage(selectedYear, selectedCrime);
+}
+
+function sizePageElements(w,h) {
+    /*  
+        This function adapts the elements on the page depending using jQuery.
+        The app is initally built to a 1440p display and this function resizes everything to a 1080p or 720p display.
+        The browser's width is passed in, and if it is below a certian threshold
+        
+    */
+    resizeMap(w,h);
+    if (w < 1950) {
+        if (w < 1500) {
+            // 720p
+            $("#header").css({"font-size": "18px"});
+            $("#selCrimeType").css({"font-size": "24px"});
+            $("#lineGraphs").css({"width": (w*(1704/2560)), "height": (h*(456/1300))});
+            $("#victimGraphs").css({"width": (w*(1704/2560)), "height": (h*(456/1300))});
+            $("#staticLine").css({"width": (w*(562/2560)), "height": (h*(456/1300))});
+            $("#dynamicLine").css({"width": (w*(1128/2560)), "height": (h*(456/1300))});
+            $("#pie").css({"width": (w*(562/2560)), "height": (h*(456/1300))});
+            $("#barAge").css({"width": (w*(562/2560)), "height": (h*(456/1300))});
+            $("#barEth").css({"width": (w*(562/2560)), "height": (h*(456/1300))});
+            $(".select").css({"margin-left": (w*(144/2560))});
+            $("div.year").css({"width": (w*(200/2560)), "height": (h*(72/1300)), "font-size": "30px"});
+            $("select").css({"padding": "15px"});
+        } else {
+            // 1080p
+            $("#header").css({"font-size": "30px"});
+            $("#selCrimeType").css({"font-size": "30px"});
+            $("#lineGraphs").css({"width": (w*(1716/2560)), "height": (h*(500/1300))});
+            $("#victimGraphs").css({"width": (w*(1716/2560)), "height": (h*(500/1300))});
+            $("#staticLine").css({"width": (w*(568/2560)), "height": (h*(500/1300))});
+            $("#dynamicLine").css({"width": (w*(1142/2560)), "height": (h*(500/1300))});
+            $("#pie").css({"width": (w*(568/2560)), "height": (h*(500/1300))});
+            $("#barAge").css({"width": (w*(568/2560)), "height": (h*(500/1300))});
+            $("#barEth").css({"width": (w*(568/2560)), "height": (h*(500/1300))});
+            $(".select").css({"margin-left": (w*(144/2560))});
+            $("div.year").css({"width": (w*(200/2560)), "height": (h*(72/1300)), "font-size": "44px"});
+            $("select").css({"padding": "15px"});
+        }
+    }
+}
+
+function resizeMap(w,h) {
+    /*  ----------------------------------------------------------------------------------------------------
+        A seperate function is needed to re-size the map.
+        This is because the map is erased and re-created each time the user changes the year or crime type.
+        ----------------------------------------------------------------------------------------------------    */
+    if (w < 1950) {
+        if (w < 1500) {
+            // 720p
+            $("#map").css({"width": (w*(756/2560)), "height": (h*(912/1300))});
+        } else {
+            // 1080p
+            $("#map").css({"width": (w*(794/2560)), "height": (h*(1000/1300))});
+        }
+    }
 }
 
 function createDropdown() {
@@ -24,7 +84,7 @@ function createDropdown() {
         let dropMenu = "";
         for (let i = 0; i < data.length; i++) {
             // console.log(data[i]["Crimes"]);
-            dropMenu = dropMenu.concat(`<option value="${data[i]["Crimes"]}" onClick="changeCrime(this.value);">${data[i]["Crimes"]}</option>`);
+            dropMenu = dropMenu.concat(`<option value="${data[i]["Crimes"]}">${data[i]["Crimes"]}</option>`);
         };
         selection.innerHTML = dropMenu;
     });
@@ -36,7 +96,8 @@ function changeYear(y) {
 }
 
 function changeCrime(c) {
-    alert(`${c}`);
+    selectedCrime = c;
+    updatePage(selectedYear, selectedCrime);
 }
 
 /*-----------------------------------------------------------
@@ -187,7 +248,7 @@ function ageChart(data) {
             marker: {
                 color: '#D35400', 
                 line: {
-                    color: 'rgba(243, 156, 18, 1)', 
+                    color: '#F39C12', 
                     width: 1
                 }
             }
@@ -220,12 +281,12 @@ function ethnicityChart(data) {
         marker: {
             color: '#D35400', 
             line: {
-                color: '#FD8D3C', 
+                color: '#F39C12', 
                 width: 1
             }
         }
     }];
-    Plotly.newPlot("barEth", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
+    Plotly.newPlot("barEth", plotData);
 };
 
 /*------------------------------------------------------------------------------------
@@ -249,10 +310,10 @@ function genderChart(data) {
         labels: genderCatg,
         name: "Crimes by Gender",
         marker: {
-            colors: ['#D35400', '#FD8D3C']
+            colors: ['#D35400', '#F39C12']
         }
     }];
-    Plotly.newPlot("pie", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
+    Plotly.newPlot("pie", plotData);
 };
 
 /*------------------------------------------------------------
@@ -274,6 +335,48 @@ function fetchMapData(selectedYear, selectedCrime) {
 ------------------------------------------------------------------------------------*/
 // function to setup map
 function crimeMap(data) {
-    // ADD CODE TO PARSE THE DATA
-    // ADD CODE FOR MAP HERE
+    var pageMap = document.getElementById("map").innerHTML;
+    if (pageMap != "") {
+        document.getElementById("map").outerHTML = "<div id=\"map\"></div>";
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        sizePageElements(w,h);
+    }
+    var myMap = L.map("map", {
+        center: [34, -118.42],
+        zoom: 10,
+        zoomDelta: 0.1,
+        zoomSnap: 0
+    });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(myMap);
+    for (index = 0; index < data.length; index++) {
+        var marker = L.circle([data[index].lat, data[index].lon], {
+            color: "#048",
+            weight: 1,
+            fillColor: "#0AF",
+            fillOpacity: 0.9,
+            radius: scaleDatapoints(data.length)
+        });
+        marker.addTo(myMap);
+    }
 };
+
+function scaleDatapoints(size) {
+    if (size > 10000) {
+        return 150;
+    } else if (size > 7500) {
+        return 200;
+    } else if (size > 5000) {
+        return 250;
+    } else if (size > 2500) {
+        return 300;
+    } else if (size > 1000) {
+        return 400;
+    } else if (size > 500) {
+        return 500;
+    } else {
+        return 750;
+    }
+}

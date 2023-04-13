@@ -1,9 +1,9 @@
+# dependencies
 from flask import Flask
 from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-# dependencies
 from sqlalchemy import create_engine, MetaData, text
 from sqlalchemy.ext.automap import automap_base
 from flask import Flask
