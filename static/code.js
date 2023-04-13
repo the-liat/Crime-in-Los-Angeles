@@ -185,7 +185,7 @@ function ageChart(data) {
             text: ageCatg,
             name: 'Victim Age',
             marker: {
-                color: 'rgba(211, 84, 0, 0.8)', 
+                color: '#D35400', 
                 line: {
                     color: 'rgba(243, 156, 18, 1)', 
                     width: 1
@@ -218,9 +218,9 @@ function ethnicityChart(data) {
         text: ethnCatg,
         name: 'Victim Ethnicity',
         marker: {
-            color: 'rgba(211, 84, 0, 0.8)', 
+            color: '#D35400', 
             line: {
-                color: 'rgba(243, 156, 18, 1)', 
+                color: '#FD8D3C', 
                 width: 1
             }
         }
@@ -249,7 +249,7 @@ function genderChart(data) {
         labels: genderCatg,
         name: "Crimes by Gender",
         marker: {
-            colors: ['rgb(211, 84, 0)', 'rgb(243, 156, 18)']
+            colors: ['#D35400', '#FD8D3C']
         }
     }];
     Plotly.newPlot("pie", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
