@@ -26,6 +26,7 @@ fetchAllCrimes();
 
 // Calling the function to update charts when selection is made 
 // [default passed to the flask server is (2022, 'Assualt'), so the page starts with that]
+createDropdown(); //initializing the drop down menu for crimes
 updatePage(selectedYear, selectedCrime);
 
 /*------------------------------------------------------------------------------------
@@ -48,7 +49,6 @@ function fetchAllCrimes() {
     // Fetch the JSON data and create crime chart
     d3.json(crime_url).then(function(data) {
         console.log(data); // Verifying data
-        createDropdown(data); //initializing the drop down menu *** DO WE NEED THIS OR DID ASTER CREATE IT ON THE PAGE?
         crimeChart(data);
     });
 };
@@ -56,14 +56,21 @@ function fetchAllCrimes() {
 /*------------------------------------------------------------
         Creating the Crime Type down menu - UPDATE FUNCTION IF IT IS NEEDED AT ALL
 -----------------------------------------------------------*/
-function createDropdown(data) {
-    let selection = document.getElementById("selDataset");
-    for (let i = 0; i < data.names.length; i++) {
-        let option = document.createElement("option");
-        option.value = data.names[i];
-        option.text = data.names[i];
+function createDropdown() {
+    // Create promise 
+    const crimeNamePromise = d3.json(url); 
+    console.log("Crime Names: ", crimeNamePromise);
+    // Fetch the JSON data and create/ update chart 
+    d3.json(url).then(function(data) {
+        console.log(data); // Verifying data
+        let selection = document.getElementById("selCrimeType");
+        for (let i = 0; i < data.names.length; i++) {
+            let option = document.createElement("option");
+            option.value = data.names[i];
+            option.text = data.names[i];
         selection.appendChild(option);
-    };
+        };
+    });
 };
 
 /*------------------------------------------------------------------------------------
