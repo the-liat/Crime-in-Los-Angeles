@@ -3,7 +3,6 @@
 -------------------------------------------------------------*/
 let url = "http://127.0.0.1:5000/";
 let crime_url = `${url}/crime`;
-<<<<<<< HEAD
 let crime_by_year_url = `${url}/crime_year/${year}/${crime}`;
 let victim_data_url = `${url}/victim/${year}/${crime}`
 let map_url = `${url}/map/${year}/${crime}`;
@@ -68,11 +67,6 @@ function createDropdown(data) {
         selection.appendChild(option);
     }
 }
-=======
-let crime_by_year_url = `${url}/crime_year`;
-let victim_data_url = `${url}/victim`
-let map_url = `${url}/map`;
->>>>>>> 2e0fcd8b61f497d029ca1316e4eb3fcb075ea710
 
 /*-----------------------------------------------------------
     getting selected choices from drop down menus when clicked   
