@@ -101,17 +101,6 @@ function changeCrime(c) {
 }
 
 /*-----------------------------------------------------------
-    getting selected choices from drop down menus when clicked   
- -----------------------------------------------------------*/
-function optionChanged() {
-    let selectedYear = d3.select("#xxxxxxx").property("value"); //NEED TO CHANGE THE div TO THE CORRECT ONE ON THE PAGE
-    // THIS MIGHT NEED TO CHANGE FOR 5 LINES WITH CONDITIONALS BECAUSE WE HAVE 5 BOXES ON THE PAGE. VALUE OF YEAR NEED TO BE INTEGER
-    let selectedCrime = d3.select("#yyyyyyyy").property("value"); //NEED TO CHANGE THE div TO THE CORRECT ONE ON THE PAGE
-    updatePage(selectedYear, selectedCrime);
-};
-
-
-/*-----------------------------------------------------------
         Generating the Chart (all nested functions)   
  -----------------------------------------------------------*/
 // Calling the function to get data and create static graph (one time no need to update)
@@ -131,6 +120,9 @@ function updatePage(selectedYear, selectedCrime) {
     fetchCrimeByMonth(selectedYear, selectedCrime);
     fetchVictimData(selectedYear, selectedCrime);
     fetchMapData(selectedYear, selectedCrime);
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    sizePageElements(w,h);
 };
 
 /*------------------------------------------------------------
