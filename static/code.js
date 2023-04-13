@@ -157,9 +157,22 @@ function crimeChart(data) {
     let plotData = [{
         type: "scatter",
         x: crimeYear,
-        y: totalCrime
+        y: totalCrime,
+        title: 'Number of All Crimes by Year',
+        mode: 'lines+markers',
+        marker: {
+          color: '#FFA500',
+          size: 8
+        },
+        line: {
+          color: '#F08000',
+          width: 1
+        }
       }];
-    Plotly.newPlot("staticLine", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
+    /*let layout = {
+        plot_bgcolor: '#FFE5B4' 
+      }*/
+    Plotly.newPlot("staticLine", plotData, {responsive: true}); 
 };
 
 /*------------------------------------------------------------
@@ -193,9 +206,19 @@ function crimeByMonthChart(data) {
     let plotData = [{
         type: "scatter",
         x: crimeMonth,
-        y: numCrimes
+        y: numCrimes,
+        title: 'Number of Crimes by Month',
+        mode: 'lines+markers',
+        marker: {
+          color: '#FFA500',
+          size: 8
+        },
+        line: {
+          color: '#F08000',
+          width: 1
+        }
       }];
-    Plotly.newPlot("dynamicLine", plotData);
+    Plotly.newPlot("dynamicLine", plotData, {responsive: true});
 };
 
 
@@ -245,7 +268,7 @@ function ageChart(data) {
                 }
             }
         }];
-        Plotly.newPlot("barAge", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
+        Plotly.newPlot("barAge", plotData, {responsive: true}); 
 };
 
 /*------------------------------------------------------------------------------------
@@ -278,7 +301,7 @@ function ethnicityChart(data) {
             }
         }
     }];
-    Plotly.newPlot("barEth", plotData);
+    Plotly.newPlot("barEth", plotData, {responsive: true});
 };
 
 /*------------------------------------------------------------------------------------
@@ -305,7 +328,7 @@ function genderChart(data) {
             colors: ['#D35400', '#F39C12']
         }
     }];
-    Plotly.newPlot("pie", plotData);
+    Plotly.newPlot("pie", plotData, {responsive: true});
 };
 
 /*------------------------------------------------------------
@@ -345,9 +368,9 @@ function crimeMap(data) {
     }).addTo(myMap);
     for (index = 0; index < data.length; index++) {
         var marker = L.circle([data[index].lat, data[index].lon], {
-            color: "#048",
+            color: "#CC7722",
             weight: 1,
-            fillColor: "#0AF",
+            fillColor: "#FAC898",
             fillOpacity: 0.9,
             radius: scaleDatapoints(data.length)
         });
