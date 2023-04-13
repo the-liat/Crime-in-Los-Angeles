@@ -1,13 +1,14 @@
-Project 3 Summary: LA Crime Data Analysis
-•	There are more male victims than females in LA
-•	Theft, robbery, and burglary are the highest crimes in LA followed by assault.
-•	Extortion and vehicle theft are the least crimes committed in LA
-•	Most of the theft, burglary, and assault victims are males.
-•	However, domestic violence is higher on females than males
-•	Overall crime took deep down in 2020 due to the lockdown and picked up in late 2021 and 2022
-•	Hispanics are the largest numbers of victims in LA followed by whites
-•	The crime data shows Asians are less affect by crime in LA compared to other races
-•	Most of the crimes in LA are committed in residential area followed by freeway/street
+# Project 3 Summary: LA Crime Data Analysis
+
+* There are more male victims than females in LA
+* Theft, robbery, and burglary are the highest crimes in LA followed by assault.
+*	Extortion and vehicle theft are the least crimes committed in LA
+*	Most of the theft, burglary, and assault victims are males.
+*	However, domestic violence is higher on females than males
+*	Overall crime took deep down in 2020 due to the lockdown and picked up in late 2021 and 2022
+*	Hispanics are the largest numbers of victims in LA followed by whites
+*	The crime data shows Asians are less affect by crime in LA compared to other races
+*	Most of the crimes in LA are committed in residential area followed by freeway/street
 
 * Crime by victime gender
 
