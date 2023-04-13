@@ -260,6 +260,7 @@ function ageChart(data) {
             orientation: 'h',
             text: ageCatg,
             name: 'Victim Age',
+            title: 'Victim Age',
             marker: {
                 color: '#D35400', 
                 line: {
@@ -293,6 +294,7 @@ function ethnicityChart(data) {
         orientation: 'h',
         text: ethnCatg,
         name: 'Victim Ethnicity',
+        title: 'Victim Ethnicity',
         marker: {
             color: '#D35400', 
             line: {
@@ -323,7 +325,8 @@ function genderChart(data) {
         type: 'pie',
         values: genderPercent,
         labels: genderCatg,
-        name: "Crimes by Gender",
+        name: "Victim Gender",
+        title: 'Victim Gender',
         marker: {
             colors: ['#D35400', '#F39C12']
         }
