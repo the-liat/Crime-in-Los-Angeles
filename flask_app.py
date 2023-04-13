@@ -20,7 +20,17 @@ app = Flask(__name__)
 
 @app.route("/") 
 def home():
-    return "Data for visualizations"
+    query = text("""
+    SELECT crime 
+    FROM crime_type
+    GROUP BY crime
+    """)
+    result = engine.execute(query)
+    rows = result.fetchall()
+    crime_dict = []
+    for row in rows:
+        crime_dict.append({"Crimes": row[0]})
+    return jsonify(crime_dict)
 
 """
 selected_year and selected_crime will be selected on the visualization web page by the user and passed into the functions below
