@@ -113,6 +113,7 @@ function changeCrime(c) {
        Update page 
 ------------------------------------------------------------------------------------*/
 function updatePage(selectedYear, selectedCrime) {
+    displayYear(selectedYear);
 //    alert(`Year:  ${selectedYear}`);
     crime_by_year_url = `${url}/crime_year/${selectedYear}/${selectedCrime}`;
     victim_data_url = `${url}/victim/${selectedYear}/${selectedCrime}`;
@@ -124,6 +125,18 @@ function updatePage(selectedYear, selectedCrime) {
     var h = window.innerHeight;
     sizePageElements(w,h);
 };
+
+function displayYear(y){
+    for (i = 2018; i < 2023; i++) {
+        if (i == y) {
+            $(`#${i}`).css({"background-color": "#FFA500"});
+        } else {
+            $(`#${i}`).css({"background-color": "#FF751A"});
+        }
+    }
+    
+    //
+}
 
 /*------------------------------------------------------------
           Data for total Crimes for 2018-2022
