@@ -1,83 +1,48 @@
 /*------------------------------------------------------------
         Requesting LA Crime data from Flask Server
 -------------------------------------------------------------*/
+let selectedYear = 2022;
+let selectedCrime = "Assault";
 let url = "http://127.0.0.1:5000/";
 let crime_url = `${url}/crime`;
-<<<<<<< HEAD
-let crime_by_year_url = `${url}/crime_year/${year}/${crime}`;
-let victim_data_url = `${url}/victim/${year}/${crime}`
-let map_url = `${url}/map/${year}/${crime}`;
+let crime_by_year_url = `${url}/crime_year/${selectedYear}/${selectedCrime}`;
+let victim_data_url = `${url}/victim/${selectedYear}/${selectedCrime}`;
+let map_url = `${url}/map/${selectedYear}/${selectedCrime}`;
 
-/*------------------------------------------------------------
-Create Crime Chart
--------------------------------------------------------------*/
-
-// Create promises (that will be based on the user selection)
-const crimePromise = d3.json(crime_url);
-console.log("Crime Data Promise: ", crimePromise);
-
-// Fetch the JSON data and create crime chart
-d3.json(crime_url).then(function(data) {
-  console.log(data); 
-  // Verifying data
-//   createDropdown(data); //initializing the drop down menu
-  crimeChart(data); // this will initialize the page wth the first subject
-}); 
-function crimeChart(data){
-// Set up the trace for the bar chart
-let trace = {
-    x: data.year,
-    y: data.Total_Crimes,
-    text: labels,
-    type: "line",
-    // orientation: "h"
-};
-
-// Setup the layout
-let layout = {
-    title: "LA crime data 2018-2022"
-};
-
-// Call Plotly to plot the bar chart
-Plotly.newPlot("line", [trace], layout)
+function init() {
+    createDropdown();
+    fetchAllCrimes();
+    updatePage(selectedYear, selectedCrime);
 }
 
-/*------------------------------------------------------------
-Create/Update Crime by year Chart
--------------------------------------------------------------*/
+function createDropdown() {
+    const crimeNamePromise = d3.json(url);
+    // Fetch the JSON data and create/ update chart 
+    d3.json(url).then(function(data) {
+//        console.log(data); // Verifying data
+        let selection = document.getElementById("selCrimeType");
+        let dropMenu = "";
+        for (let i = 0; i < data.length; i++) {
+            // console.log(data[i]["Crimes"]);
+            dropMenu = dropMenu.concat(`<option value="${data[i]["Crimes"]}" onClick="changeCrime(this.value);">${data[i]["Crimes"]}</option>`);
+        };
+        selection.innerHTML = dropMenu;
+    });
+};
 
-// Create promises (that will be based on the user selection)
-const crmYrPromise = d3.json(crime_by_year_url);
-console.log("Crime by Year Data Promise: ", crmYrPromise);
-
-// Fetch the JSON data and create/ update page - from here all functions will be called (functions are nested)
-d3.json(crime_by_year_url).then(function(data) {
-  console.log(data); // Verifying data
-  crimeByYearChart(2022, "Domestic Violence"); // this will initialize the page with last year we have data one and a crime type
-});
-
-/*-------------------------------------------------------
-        Creating the Crime Type down menu - UPDATE FUNCTION
--------------------------------------------------------*/
-function createDropdown(data) {
-    let selection = document.getElementById("selyear");
-    for (let i = 0; i < data.names.length; i++) {
-        let option = document.createElement("option");
-        option.value = data.names[i];
-        option.text = data.names[i];
-        selection.appendChild(option);
-    }
+function changeYear(y) {
+    selectedYear = y;
+    updatePage(selectedYear, selectedCrime);
 }
-=======
-let crime_by_year_url = `${url}/crime_year`;
-let victim_data_url = `${url}/victim`
-let map_url = `${url}/map`;
->>>>>>> 2e0fcd8b61f497d029ca1316e4eb3fcb075ea710
+
+function changeCrime(c) {
+    alert(`${c}`);
+}
 
 /*-----------------------------------------------------------
     getting selected choices from drop down menus when clicked   
  -----------------------------------------------------------*/
- function optionChanged() {
+function optionChanged() {
     let selectedYear = d3.select("#xxxxxxx").property("value"); //NEED TO CHANGE THE div TO THE CORRECT ONE ON THE PAGE
     // THIS MIGHT NEED TO CHANGE FOR 5 LINES WITH CONDITIONALS BECAUSE WE HAVE 5 BOXES ON THE PAGE. VALUE OF YEAR NEED TO BE INTEGER
     let selectedCrime = d3.select("#yyyyyyyy").property("value"); //NEED TO CHANGE THE div TO THE CORRECT ONE ON THE PAGE
@@ -89,17 +54,19 @@ let map_url = `${url}/map`;
         Generating the Chart (all nested functions)   
  -----------------------------------------------------------*/
 // Calling the function to get data and create static graph (one time no need to update)
-fetchAllCrimes();
+
 
 // Calling the function to update charts when selection is made 
 // [default passed to the flask server is (2022, 'Assualt'), so the page starts with that]
-createDropdown(); //initializing the drop down menu for crimes
-updatePage(selectedYear, selectedCrime);
 
 /*------------------------------------------------------------------------------------
        Update page 
 ------------------------------------------------------------------------------------*/
 function updatePage(selectedYear, selectedCrime) {
+//    alert(`Year:  ${selectedYear}`);
+    crime_by_year_url = `${url}/crime_year/${selectedYear}/${selectedCrime}`;
+    victim_data_url = `${url}/victim/${selectedYear}/${selectedCrime}`;
+    map_url = `${url}/map/${selectedYear}/${selectedCrime}`;
     fetchCrimeByMonth(selectedYear, selectedCrime);
     fetchVictimData(selectedYear, selectedCrime);
     fetchMapData(selectedYear, selectedCrime);
@@ -120,26 +87,6 @@ function fetchAllCrimes() {
     });
 };
 
-/*------------------------------------------------------------
-        Creating the Crime Type down menu - UPDATE FUNCTION IF IT IS NEEDED AT ALL
------------------------------------------------------------*/
-function createDropdown() {
-    // Create promise 
-    const crimeNamePromise = d3.json(url); 
-    console.log("Crime Names: ", crimeNamePromise);
-    // Fetch the JSON data and create/ update chart 
-    d3.json(url).then(function(data) {
-        console.log(data); // Verifying data
-        let selection = document.getElementById("selCrimeType");
-        for (let i = 0; i < data.names.length; i++) {
-            let option = document.createElement("option");
-            option.value = data.names[i];
-            option.text = data.names[i];
-        selection.appendChild(option);
-        };
-    });
-};
-
 /*------------------------------------------------------------------------------------
         Line chart for total Crimes for 2018-2022
 ------------------------------------------------------------------------------------*/
@@ -155,33 +102,11 @@ function crimeChart(data) {
     console.log(crimeYear); // prints an array of Year values
     // Code for line chart
     let plotData = [{
-        type: "line",
-        data: {
-          labels: crimeYear,
-          datasets: [
-            {
-                label: "Total Crime",
-                data: totalCrime,
-                backgroundColor: "rgba(211, 84, 0, 0.8)",
-                borderColor: "rgba(243, 156, 18, 1)",
-                borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-            title: {
-                display: true,
-                text: "Total Number of Crimes 2018-2022",
-                fontSize: 18
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {beginAtZero: true}
-                    }],
-            },
-        }
+        type: "scatter",
+        x: crimeYear,
+        y: totalCrime
       }];
-    Plotly.newPlot("xxxx", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
+    Plotly.newPlot("staticLine", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
 };
 
 /*------------------------------------------------------------
@@ -189,11 +114,11 @@ function crimeChart(data) {
 -------------------------------------------------------------*/
 function fetchCrimeByMonth(selectedYear, selectedCrime) {
     // Create promise 
-    const crmYrPromise = d3.json(crime_by_year_url); 
+    var crmYrPromise = d3.json(crime_by_year_url); 
     console.log("Crime by Month Data Promise: ", crmYrPromise);
     // Fetch the JSON data and create/ update chart 
     d3.json(crime_by_year_url).then(function(data) {
-        console.log(data); // Verifying data
+//        console.log(data); // Verifying data
         crimeByMonthChart(data);
     });
 };
@@ -213,42 +138,20 @@ function crimeByMonthChart(data) {
     console.log(crimeMonth); // prints an array of Year values
     // Code for line chart
     let plotData = [{
-        type: "line",
-        data: {
-          labels: crimeMonth,
-          datasets: [
-            {
-                label: "Number of Crimes",
-                data: numCrimes,
-                backgroundColor: "rgba(211, 84, 0, 0.8)",
-                borderColor: "rgba(243, 156, 18, 1)",
-                borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-            title: {
-                display: true,
-                text: "Number of Crimes by Month",
-                fontSize: 18
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {beginAtZero: true}
-                    }],
-            },
-        }
+        type: "scatter",
+        x: crimeMonth,
+        y: numCrimes
       }];
-    Plotly.newPlot("xxxx", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
+    Plotly.newPlot("dynamicLine", plotData);
 };
 
 
 /*------------------------------------------------------------
         Victim Data
 -------------------------------------------------------------*/
-function fetchVictimData(selectedYear, selectedCrime); {
+function fetchVictimData(selectedYear, selectedCrime) {
     // Create promise 
-    const victimPromise = d3.json(victim_data_url); 
+    var victimPromise = d3.json(victim_data_url); 
     console.log("Victim Data Promise: ", victimPromise);
     // Fetch the JSON data and create/ update chart 
     d3.json(victim_data_url).then(function(data) {
@@ -289,7 +192,7 @@ function ageChart(data) {
                 }
             }
         }];
-        Plotly.newPlot("xxxx", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
+        Plotly.newPlot("barAge", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
 };
 
 /*------------------------------------------------------------------------------------
@@ -322,7 +225,7 @@ function ethnicityChart(data) {
             }
         }
     }];
-    Plotly.newPlot("xxx", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
+    Plotly.newPlot("barEth", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
 };
 
 /*------------------------------------------------------------------------------------
@@ -342,25 +245,20 @@ function genderChart(data) {
     // Code for pie chart
     let plotData = [{
         type: 'pie',
-        data: {
-            labels: genderCatg,
-            datasets: [{
-              data: genderPercent,
-              backgroundColor: [
-                'rgb(211, 84, 0)', // color for Male
-                'rgb(243, 156, 18)' // color for Female
-              ],
-              borderWidth: 1
-            }]
+        values: genderPercent,
+        labels: genderCatg,
+        name: "Crimes by Gender",
+        marker: {
+            colors: ['rgb(211, 84, 0)', 'rgb(243, 156, 18)']
         }
     }];
-    Plotly.newPlot("xxx", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
+    Plotly.newPlot("pie", plotData); //CHANGE xxx TO THE RIGHT div ON THE HTML
 };
 
 /*------------------------------------------------------------
         Map Data
 -------------------------------------------------------------*/
-function fetchMapData(selectedYear, selectedCrime); {
+function fetchMapData(selectedYear, selectedCrime) {
     // Create promise 
     const mapPromise = d3.json(map_url); 
     console.log("Map Data Promise: ", mapPromise);
@@ -379,5 +277,3 @@ function crimeMap(data) {
     // ADD CODE TO PARSE THE DATA
     // ADD CODE FOR MAP HERE
 };
-
-
