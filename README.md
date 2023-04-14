@@ -1,4 +1,49 @@
-# Project 3 Summary: LA Crime Data Analysis
+Crime in Los Angeles: Data Story Telling Using Visualizations
+Table of Contents
+Overview
+Getting Started
+Usage
+Results
+Contributing
+References
+Overview
+This dataset reflects incidents of crime in the City of Los Angeles dating from 2010 to present. This data is transcribed from original crime reports that are typed on paper. We selected only 2018 to 2022.
+
+This interactive dashboard has:
+
+User-friendly interface that makes it easy for users to navigate and interact with the data.
+Charts to show frequency of crimes amongst various demographics.
+Map of Los Angeles City crime rate by location.
+Allows the user to select the year and the type of crime
+Getting Started
+Prerequisites
+
+What you need to install before running the software and how to install them.
+
+Python 3.x
+Flask
+SQLAlchemy
+Pandas
+CORS**
+** To get rid of a CORS error, you can download a browser extension like CORS Unblock. The extension appends Access-Control-Allow-Origin: * to every HTTP response when it is enabled. It can also add custom Access-Control-Allow-Origin and Access-Control-Allow-Methods headers to the responses.
+
+Installation
+
+[add how to install some of the softwares]
+
+[add important codes that worth noting]
+
+Usage
+To use this project, follow these steps:
+
+Clone this repository to your local machine.
+Install the necessary dependencies.
+Set up the database and import the data.
+Run the Flask server.
+Open the web page and explore the visualizations.
+Major Findings
+
+# Project 3 Summary: LA Crime Data Analysis- major findings
 
 * There are more male victims than females in LA
 * Theft, robbery, and burglary are the highest crimes in LA followed by assault.
