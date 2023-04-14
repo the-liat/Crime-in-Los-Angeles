@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="static/style.css">
     <!-- Leaflet JavaScript code -->
     <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <!-- D3 library -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <!-- Leaflet CSS -->
@@ -18,7 +20,7 @@
     <div>
         <div>
             <span class="select">
-                <select id="selCrimeType">
+                <select id="selCrimeType" onchange="changeCrime(this.value)">
                     <option>Lorem ipsum</option>
                     <option>Dolor sit amet</option>
                     <option>Consectetur adipiscing elit</option>
@@ -34,11 +36,11 @@
                 </select>
             </span>
             <span class="select">
-                <div class="year"><option value="2018" onClick="changeYear(this.value);">2018</option></div>
-                <div class="year"><option value="2019" onClick="changeYear(this.value);">2019</option></div>
-                <div class="year"><option value="2020" onClick="changeYear(this.value);">2020</option></div>
-                <div class="year"><option value="2021" onClick="changeYear(this.value);">2021</option></div>
-                <div class="year"><option value="2022" onClick="changeYear(this.value);">2022</option></div>
+                <div class="year" id="2018"><option value="2018" onClick="changeYear(this.value);">2018</option></div>
+                <div class="year" id="2019"><option value="2019" onClick="changeYear(this.value);">2019</option></div>
+                <div class="year" id="2020"><option value="2020" onClick="changeYear(this.value);">2020</option></div>
+                <div class="year" id="2021"><option value="2021" onClick="changeYear(this.value);">2021</option></div>
+                <div class="year" id="2022"><option value="2022" onClick="changeYear(this.value);">2022</option></div>
             </span>
         </div>
         <div id="display">
@@ -53,9 +55,7 @@
                     <span id="barEth"></span>
                 </div>
             </span>
-            <span id="map">
-                <!-- MAP -->
-            </span>
+            <span id="theMap"><div id="map"></div></span>
         </div>
     </div>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
