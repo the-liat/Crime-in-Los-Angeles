@@ -48,6 +48,25 @@ To use this project, follow these steps:
 4.	Run the Flask server.
 5.	Open the web page and explore the visualizations.
 
+## Major Findings
+
+- There are more male victims than females in LA
+- Theft, robbery, and burglary are the highest crimes in LA followed by assault.
+- Extortion and vehicle theft are the least crimes committed in LA
+- Most of the theft, burglary, and assault victims are males.
+- However, domestic violence is higher on females than males
+- Overall crime took deep down in 2020 due to the lockdown and picked up in late 2021 and 2022
+- Hispanics are the largest numbers of victims in LA followed by whites
+- The crime data shows Asians are less affect by crime in LA compared to other races
+- Most of the crimes in LA are committed in residential area followed by freeway/street
+
+<img width="450" alt="Screenshot 2023-04-13 at 8 48 26 PM" src="https://user-images.githubusercontent.com/119654958/231937086-2c47fd70-6eed-4c6c-a5a0-f0815c70ee08.png">
+
+<img width="831" alt="Screenshot 2023-04-13 at 8 49 08 PM" src="https://user-images.githubusercontent.com/119654958/231936959-50cef830-a00d-429c-9251-ec3de736805d.png">
+
+<img width="827" alt="Screenshot 2023-04-13 at 8 48 01 PM" src="https://user-images.githubusercontent.com/119654958/231937011-84c17a9a-66ef-4edf-866c-cdcf8615be22.png">
+
+
 
 ## Contributing
 
