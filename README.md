@@ -28,15 +28,9 @@ What you need to install before running the software and how to install them.
 - Flask
 - SQLAlchemy
 - Pandas
-- CORS**
+- Falsk-CORS**
 
 ** To get rid of a CORS error, you can download a browser extension like CORS Unblock. The extension appends Access-Control-Allow-Origin: * to every HTTP response when it is enabled. It can also add custom Access-Control-Allow-Origin and Access-Control-Allow-Methods headers to the responses.
-
-Installation
-
-[add how to install some of the softwares]
-
-[add important codes that worth noting]
 
 ## Usage 
 
@@ -44,9 +38,8 @@ To use this project, follow these steps:
 
 1.	Clone this repository to your local machine.
 2.	Install the necessary dependencies.
-3.	Set up the database and import the data.
-4.	Run the Flask server.
-5.	Open the web page and explore the visualizations.
+3.	Run the Flask server app (flask_app.py).
+4.  Open the web page (index.html) and explore the visualizations.
 
 ## Major Findings
 
