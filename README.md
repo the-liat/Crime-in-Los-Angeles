@@ -25,6 +25,7 @@ This interactive dashboard has:
 
 ## Data Flow Chart
 <img width="450" src="project3_data_flow.png">
+
 - We extracted, cleaned and merged the CSV files using a Python script (Pandas package)
 - We then normalized the data and loaded the tables into a SQLite database
 - Data queries were done using SQLAlchemy. 
