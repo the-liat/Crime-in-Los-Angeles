@@ -25,13 +25,13 @@ This interactive dashboard has:
 
 ## Data Flow Chart
 <img width="450" src="project3_data_flow.png">
-* We extracted, cleaned and merged the CSV files using a Python script (Pandas package)
-* We then normalized the data and loaded the tables into a SQLite database
-* Data queries were done using SQLAlchemy. 
-* Flask is then used to create API endpoints that can be accessed using HTTP requests.
-* We passed to Flask the processed data in a json format
-* The interactive dashboard website was built using HTML and CSS.
-* Java script is used to send requests to the Flask app and generate charts. 
+- We extracted, cleaned and merged the CSV files using a Python script (Pandas package)
+- We then normalized the data and loaded the tables into a SQLite database
+- Data queries were done using SQLAlchemy. 
+- Flask is then used to create API endpoints that can be accessed using HTTP requests.
+- We passed to Flask the processed data in a json format
+- The interactive dashboard website was built using HTML and CSS.
+- Java script is used to send requests to the Flask app and generate charts. 
 
 ## Getting Started  
 
