@@ -11,13 +11,27 @@
 
 ## Overview
 
-This dataset reflects incidents of crime in the City of Los Angeles dating from 2010 to present. This data is transcribed from original crime reports that are typed on paper. We selected only 2018 to 2022. 
+The original data reflect incidents of crime in the City of Los Angeles dating from 2010 to present.The data can be found in data.gov website - a government website that provides access to a wide range of public datasets. We used the following two data sets and selected only five years, 2018 to 2022:
+1) https://catalog.data.gov/dataset/crime-data-from-2020-to-present
+2) https://catalog.data.gov/dataset/crime-data-from-2010-to-2019/resource/7019ef5a-a383-479c-8a28-8175ced9b7f5
+
+These datasets are electronic versions of the original hard copies of all crime reports in Los Angeles metropolitan area. These reports were later transcribed and coded. 
 
 This interactive dashboard has: 
 - User-friendly interface that makes it easy for users to navigate and interact with the data. 
 - Charts to show frequency of crimes amongst various demographics. 
 - Map of Los Angeles City crime rate by location.
 - Allows the user to select the year and the type of crime 
+
+## Data Flow Chart
+<img width="450" src="project3_data_flow.png">
+* We extracted, cleaned and merged the CSV files using a Python script (Pandas package)
+* We then normalized the data and loaded the tables into a SQLite database
+* Data queries were done using SQLAlchemy. 
+* Flask is then used to create API endpoints that can be accessed using HTTP requests.
+* We passed to Flask the processed data in a json format
+* The interactive dashboard website was built using HTML and CSS.
+* Java script is used to send requests to the Flask app and generate charts. 
 
 ## Getting Started  
 
@@ -53,6 +67,8 @@ To use this project, follow these steps:
 - The crime data shows Asians are less affect by crime in LA compared to other races
 - Most of the crimes in LA are committed in residential area followed by freeway/street
 
+The following charts were obtained using Python Pandas and Matplotlib and are in addition to what is presented on the interactive dashboard:
+
 <img width="450" alt="Screenshot 2023-04-13 at 8 48 26 PM" src="https://user-images.githubusercontent.com/119654958/231937086-2c47fd70-6eed-4c6c-a5a0-f0815c70ee08.png">
 
 <img width="831" alt="Screenshot 2023-04-13 at 8 49 08 PM" src="https://user-images.githubusercontent.com/119654958/231936959-50cef830-a00d-429c-9251-ec3de736805d.png">
@@ -70,4 +86,6 @@ How to contribute to the project and any relevant information.
 3.	Submit a pull request.
 
 ## References 
-Data for this dataset was generated from https://catalog.data.gov/. 
+Data for this dataset was obtained from https://catalog.data.gov/. 
+https://catalog.data.gov/dataset/crime-data-from-2020-to-present
+https://catalog.data.gov/dataset/crime-data-from-2010-to-2019/resource/7019ef5a-a383-479c-8a28-8175ced9b7f5
